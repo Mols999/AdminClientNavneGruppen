@@ -2,8 +2,12 @@
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:local="clr-namespace:NavnegruppenAdmin"
-             StartupUri="MainWindow.xaml">
+             StartupUri="LoginWindow.xaml">
     <Application.Resources>
-         
+        <ResourceDictionary>
+            <Style x:Key="MainWindowStyle" TargetType="{x:Type Window}">
+                <!-- Define any styles for your MainWindow here if needed -->
+            </Style>
+        </ResourceDictionary>
     </Application.Resources>
 </Application>
