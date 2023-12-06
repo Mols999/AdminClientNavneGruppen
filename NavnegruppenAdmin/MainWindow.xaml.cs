@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -16,6 +18,7 @@ namespace NavnegruppenAdmin
             InitializeComponent();
             _databaseManager = databaseManager;
             UpdateUserList();
+            UpdateAllTicketList();
         }
 
         private void SearchButton_Click(object sender, RoutedEventArgs e)
@@ -40,6 +43,7 @@ namespace NavnegruppenAdmin
             }
         }
 
+
         private void UserListView_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
             if (UserListView.SelectedItem is User selectedUser)
@@ -49,9 +53,32 @@ namespace NavnegruppenAdmin
                 FirstNameTextBox.Text = selectedUser.PersonalInfo.FirstName;
                 LastNameTextBox.Text = selectedUser.PersonalInfo.LastName;
                 EmailTextBox.Text = selectedUser.Email;
+                PasswordBox.Clear();
                 SelectedUser = selectedUser;
             }
         }
+
+
+        private void CloseTicketButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (TicketListView.SelectedItem is Ticket selectedTicket)
+            {
+                _databaseManager.UpdateTicketStatus(selectedTicket.Id, "Closed");
+                UpdateAllTicketList();
+            }
+            else
+            {
+                MessageBox.Show("Please select a ticket to close.", "No Ticket Selected", MessageBoxButton.OK, MessageBoxImage.Warning);
+            }
+        }
+
+
+        private void UpdateAllTicketList()
+        {
+            var ticketList = _databaseManager.GetAllTickets();
+            TicketListView.ItemsSource = ticketList;
+        }
+
 
         private void SplitPairButton_Click(object sender, RoutedEventArgs e)
         {
@@ -60,7 +87,37 @@ namespace NavnegruppenAdmin
 
         private void SubmitButton_Click(object sender, RoutedEventArgs e)
         {
-            _databaseManager.UpdateUser(SelectedUser);
+            if (SelectedUser != null)
+            {
+                SelectedUser.Username = UsernameTextBox.Text;
+                SelectedUser.PersonalInfo.FirstName = FirstNameTextBox.Text;
+                SelectedUser.PersonalInfo.LastName = LastNameTextBox.Text;
+                SelectedUser.Email = EmailTextBox.Text;
+
+            
+                if (!string.IsNullOrWhiteSpace(PasswordBox.Password))
+                {
+                    SelectedUser.Password = PasswordBox.Password;
+                }
+
+               
+                _databaseManager.UpdateUser(SelectedUser);
+
+                MessageBox.Show("User updated successfully.", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
+
+                PasswordBox.Clear();
+            }
+            else
+            {
+                MessageBox.Show("No user selected.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
         }
+
+
+
+
+
+
+
     }
 }
