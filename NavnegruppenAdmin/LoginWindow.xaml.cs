@@ -13,7 +13,7 @@ namespace NavnegruppenAdmin
         public LoginWindow()
         {
             InitializeComponent();
-            _databaseManager = new DatabaseManager("mongodb://localhost:27017", "NewbornNamesDB");
+            _databaseManager = new DatabaseManager("mongodb+srv://Mols:ID4EY0Cqr80zSnH2@cluster0.euyeftl.mongodb.net", "NewbornNamesCloudDB");
             _adminUserCollection = _databaseManager.AdminUserCollection;
         }
 
