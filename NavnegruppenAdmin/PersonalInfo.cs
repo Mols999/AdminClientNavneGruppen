@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 
 namespace NavnegruppenAdmin
 {
+    //BsonElement attributes to map them to the corresponding fields in a MongoDB document.
     public class PersonalInfo
     {
         [BsonElement("firstName")]

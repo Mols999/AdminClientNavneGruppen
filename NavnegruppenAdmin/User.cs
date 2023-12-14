@@ -6,6 +6,7 @@ using System.Collections.Generic;
 
 public class User
 {
+    //BsonElement attributes to map them to the corresponding fields in a MongoDB document.
     [BsonId]
     public ObjectId Id { get; set; }
 
@@ -30,7 +31,7 @@ public class User
     [BsonElement("email")]
     public string Email { get; set; }
 
-    // Partner's unique identifier - now nullable
+
     [BsonElement("partner")]
     public ObjectId? PartnerId { get; set; }
 }

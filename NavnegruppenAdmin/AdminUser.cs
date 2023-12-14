@@ -10,6 +10,7 @@ namespace NavnegruppenAdmin
 {
     public class AdminUser
     {
+        //BsonElement attributes to map them to the corresponding fields in a MongoDB document.
         [BsonId]
         [BsonRepresentation(BsonType.ObjectId)]
         public string Id { get; set; }

@@ -27,6 +27,15 @@
         </ListView>
 
 
+        <ListView Name="TopLikedNamesListView" HorizontalAlignment="Right" Margin="0,100,84,0" VerticalAlignment="Top" Width="300">
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn Header="Name" Width="150" DisplayMemberBinding="{Binding Key}"/>
+                    <GridViewColumn Header="Count" Width="150" DisplayMemberBinding="{Binding Value}"/>
+                </GridView>
+            </ListView.View>
+        </ListView>
+
 
         <Label Content="User Information" HorizontalAlignment="Center" Margin="0,98,0,0" VerticalAlignment="Top" FontSize="20"/>
         <StackPanel Name="UserInfoPanel" HorizontalAlignment="Left" Margin="480,140,0,30" VerticalAlignment="Top" Width="400" DataContext="{Binding SelectedUser}">
@@ -44,7 +53,6 @@
         </StackPanel>
 
         <Button Content="Close Ticket" HorizontalAlignment="Left" Margin="30,670,0,0" VerticalAlignment="Top" Width="120" Height="40" FontSize="16" Click="CloseTicketButton_Click"/>
-
         <Button Content="Delete" HorizontalAlignment="Left" Margin="530,461,0,0" VerticalAlignment="Top" Width="86" Height="40" FontSize="16" Click="DeleteButton_Click"/>
         <Button Content="Split Pair" HorizontalAlignment="Center" Margin="0,461,0,0" VerticalAlignment="Top" Width="84" Height="40" FontSize="16" Click="SplitPairButton_Click"/>
         <Button Content="Submit" HorizontalAlignment="Left" Margin="746,461,0,0" VerticalAlignment="Top" Width="84" Height="40" FontSize="16" Click="SubmitButton_Click"/>
