@@ -18,9 +18,10 @@ namespace NavnegruppenAdmin
         {
             var client = new MongoClient(connectionString);
             var database = client.GetDatabase(databaseName);
-            _userCollection = database.GetCollection<User>("Users");
+            _userCollection = database.GetCollection<User>("User");
             _adminUserCollection = database.GetCollection<AdminUser>("AdminUser");
-            _ticketCollection = database.GetCollection<Ticket>("Ticket"); 
+            _ticketCollection = database.GetCollection<Ticket>("Ticket");
+
         }
 
         public User GetUserByUsername(string username)
@@ -68,11 +69,25 @@ namespace NavnegruppenAdmin
                     .Set(u => u.PersonalInfo.LastName, user.PersonalInfo.LastName)
                     .Set(u => u.Email, user.Email)
                     .Set(u => u.Username, user.Username)
-                    .Set(u => u.Password, user.Password); 
+                    .Set(u => u.Password, user.Password);
 
-                _userCollection.UpdateOne(filter, update);
+                Console.WriteLine($"Updating user: FirstName = {user.PersonalInfo.FirstName}, LastName = {user.PersonalInfo.LastName}");
+
+                try
+                {
+                    var result = _userCollection.UpdateOne(filter, update);
+                    if (result.ModifiedCount == 0)
+                    {
+                        Console.WriteLine("No documents were updated.");
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine($"Error updating user: {ex.Message}");
+                }
             }
         }
+
 
 
 
@@ -96,7 +111,7 @@ namespace NavnegruppenAdmin
         {
             var filter = Builders<User>.Filter.Or(
                 Builders<User>.Filter.Regex(u => u.Username, new BsonRegularExpression(keyword, "i")), // Case-insensitive username search
-                Builders<User>.Filter.Regex(u => u.PersonalInfo.FirstName, new BsonRegularExpression(keyword, "i")), // Case-insensitive first name search
+                Builders<User>.Filter.Regex(u => u.PersonalInfo.FirstName, new BsonRegularExpression(keyword, "i")), // Case-insensitive first name search (corrected casing)
                 Builders<User>.Filter.Regex(u => u.PersonalInfo.LastName, new BsonRegularExpression(keyword, "i")), // Case-insensitive last name search
                 Builders<User>.Filter.Regex(u => u.Email, new BsonRegularExpression(keyword, "i"))); // Case-insensitive email search
 

@@ -1,5 +1,6 @@
-﻿using MongoDB.Bson;
-using MongoDB.Bson.Serialization.Attributes;
+﻿using MongoDB.Bson.Serialization.Attributes;
+using MongoDB.Bson;
+using NavnegruppenAdmin;
 using System;
 
 public class Ticket
@@ -23,16 +24,7 @@ public class Ticket
 
     [BsonElement("status")]
     public string Status { get; set; }
-}
 
-public class PersonalInfo
-{
-    [BsonElement("firstName")]
-    public string FirstName { get; set; }
-
-    [BsonElement("lastName")]
-    public string LastName { get; set; }
-
-    [BsonElement("email")]
-    public string Email { get; set; }
+    [BsonElement("__v")]
+    public int Version { get; set; } 
 }
